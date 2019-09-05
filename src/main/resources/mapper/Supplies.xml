@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.wuheng.dao.SuppliesDao">
+
+	<!-- 查询所有 -->
+  	<select id="findAll" parameterType="java.lang.String" resultMap="map" >
+  		select * from supplies
+  		<where>
+  			<if test="suppliesname!=null">
+  				and sname like '%${suppliesname}%' 
+  			</if>
+  			
+  			<if test="pselect!=null">
+  				  and sproduct=${pselect} 
+  			</if>
+  			<if test="minprice!=null">
+  				  and sprice&gt;=${minprice} 
+  			</if>
+  			<if test="maxprice!=null">
+  			 	  and sprice&lt;=${maxprice} 
+  			</if>
+  		</where>
+  	</select>
+
+  	<resultMap type="supplies" id="map">
+  		<id column="sid" property="sid"/>
+  		<result column="sname" property="sname" />
+  		<result column="snum" property="snum" />
+  		<result column="sprice" property="sprice" />
+  		<result column="sproduct" property="sproduct" />
+  		<association property="product" column="sproduct" select="com.wuheng.dao.ProductDao.findById" >
+  		</association>
+  	</resultMap>
+  	
+  	
+  	
+  	<!-- 根据id进行查询 -->
+  	<select id="findById" parameterType="supplies" resultMap="map" >
+  		select * from supplies where sid=#{id}
+  	</select>
+  	
+  	<!-- 修改 -->
+  	<update id="update" parameterType="supplies" >
+  		update supplies set sname=#{sname},snum=#{snum},sprice=#{sprice},sproduct=#{sproduct} where sid=#{sid}
+  	</update>
+  	
+  	<!-- 删除 -->
+  	<delete id="delete" parameterType="supplies" >
+  		delete from supplies where sid=#{id}
+  	</delete>
+</mapper>

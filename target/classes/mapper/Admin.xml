@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.wuheng.dao.AdminDao">
+	<!-- 登录 -->
+  	<select id="findUserAndPwd" parameterType="admin" resultType="admin" >
+  		select * from admin where username=#{username} and password=#{password}
+  	</select>
+  	
+  	<!-- 注册 -->
+  	<insert id="add" parameterType="admin">
+  		insert into admin(username,password,age,gender,realname)
+  		values(#{username},#{password},#{age},#{gender},#{realname})
+  	</insert>
+  	
+</mapper>
